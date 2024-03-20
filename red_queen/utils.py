@@ -37,60 +37,60 @@ from qiskit.providers import BackendV2, Options
 from qiskit.transpiler import Target, InstructionProperties
 from qiskit.circuit.library import XGate, SXGate, RZGate, CZGate
 from qiskit.circuit import Measure, Delay, Parameter, IfElseOp
-from qiskit.providers.fake_provider import (
-    FakeAlmadenV2,
-    FakeArmonkV2,
-    FakeAthensV2,
-    FakeAuckland,
-    FakeBelemV2,
-    FakeBoeblingenV2,
-    FakeBogotaV2,
-    FakeBrooklynV2,
-    FakeBurlingtonV2,
-    FakeCairoV2,
-    FakeCambridgeV2,
-    FakeCasablancaV2,
-    FakeEssexV2,
-    FakeGeneva,
-    FakeGuadalupeV2,
-    FakeHanoiV2,
-    FakeJakartaV2,
-    FakeJohannesburgV2,
-    FakeKolkataV2,
-    FakeLagosV2,
-    FakeLimaV2,
-    FakeLondonV2,
-    FakeManhattanV2,
-    FakeManilaV2,
-    FakeMelbourneV2,
-    FakeMontrealV2,
-    FakeMumbaiV2,
-    FakeNairobiV2,
-    FakeOslo,
-    FakeOurenseV2,
-    FakeParisV2,
-    FakePerth,
-    FakePrague,
-    FakePoughkeepsieV2,
-    FakeQuitoV2,
-    FakeRochesterV2,
-    FakeRomeV2,
-    FakeSantiagoV2,
-    FakeSherbrooke,
-    FakeSingaporeV2,
-    FakeSydneyV2,
-    FakeTorontoV2,
-    FakeValenciaV2,
-    FakeVigoV2,
-    FakeWashingtonV2,
-    FakeYorktownV2,
-)
+# from qiskit.providers.fake_provider import (
+#     FakeAlmadenV2,
+#     FakeArmonkV2,
+#     FakeAthensV2,
+#     FakeAuckland,
+#     FakeBelemV2,
+#     FakeBoeblingenV2,
+#     FakeBogotaV2,
+#     FakeBrooklynV2,
+#     FakeBurlingtonV2,
+#     FakeCairoV2,
+#     FakeCambridgeV2,
+#     FakeCasablancaV2,
+#     FakeEssexV2,
+#     FakeGeneva,
+#     FakeGuadalupeV2,
+#     FakeHanoiV2,
+#     FakeJakartaV2,
+#     FakeJohannesburgV2,
+#     FakeKolkataV2,
+#     FakeLagosV2,
+#     FakeLimaV2,
+#     FakeLondonV2,
+#     FakeManhattanV2,
+#     FakeManilaV2,
+#     FakeMelbourneV2,
+#     FakeMontrealV2,
+#     FakeMumbaiV2,
+#     FakeNairobiV2,
+#     FakeOslo,
+#     FakeOurenseV2,
+#     FakeParisV2,
+#     FakePerth,
+#     FakePrague,
+#     FakePoughkeepsieV2,
+#     FakeQuitoV2,
+#     FakeRochesterV2,
+#     FakeRomeV2,
+#     FakeSantiagoV2,
+#     FakeSherbrooke,
+#     FakeSingaporeV2,
+#     FakeSydneyV2,
+#     FakeTorontoV2,
+#     FakeValenciaV2,
+#     FakeVigoV2,
+#     FakeWashingtonV2,
+#     FakeYorktownV2,
+# )
 
 
 class FakeFlamingo(BackendV2):
     """Fake multi chip backend."""
 
-    def __init__(self, distance=3):
+    def __init__(self, qubits=200, target="heavy_hex", distance=11):
         """Instantiate a new fake multi chip backend.
 
         Args:
@@ -101,7 +101,12 @@ class FakeFlamingo(BackendV2):
                 number of qubits and :math:`d` is the ``distance``
         """
         super().__init__(name="Fake Multi-QPU with Coupler Backend")
-        graph = rx.generators.directed_heavy_hex_graph(distance, bidirectional=False)
+        if target == "heavy_hex":
+            graph = rx.generators.directed_heavy_hex_graph(distance, bidirectional=False)
+        if target == "linear":
+            graph = rx.generators.directed_path_graph(qubits)
+        if target == "all_to_all":
+            graph = rx.generators.directed_complete_graph(qubits)
         num_qubits = len(graph)
         rng = np.random.default_rng(seed=12345678942)
         rz_props = {}
@@ -226,61 +231,61 @@ def initialize_tket_pass_manager(backend, optimization_level):
     return tket_pm
 
 
-def choose_backend(backend):
-    """
-    Choose a backend to run the circuit on.
-    """
+# def choose_backend(backend):
+#     """
+#     Choose a backend to run the circuit on.
+#     """
 
-    backends = {
-        "FakeAlmadenV2": FakeAlmadenV2(),
-        "FakeArmonkV2": FakeArmonkV2(),
-        "FakeAthensV2": FakeAthensV2(),
-        "FakeAuckland": FakeAuckland(),
-        "FakeBelemV2": FakeBelemV2(),
-        "FakeBoeblingenV2": FakeBoeblingenV2(),
-        "FakeBogotaV2": FakeBogotaV2(),
-        "FakeBrooklynV2": FakeBrooklynV2(),
-        "FakeBurlingtonV2": FakeBurlingtonV2(),
-        "FakeCairoV2": FakeCairoV2(),
-        "FakeCambridgeV2": FakeCambridgeV2(),
-        "FakeCasablancaV2": FakeCasablancaV2(),
-        "FakeEssexV2": FakeEssexV2(),
-        "FakeGeneva": FakeGeneva(),
-        "FakeGuadalupeV2": FakeGuadalupeV2(),
-        "FakeHanoiV2": FakeHanoiV2(),
-        "FakeJakartaV2": FakeJakartaV2(),
-        "FakeJohannesburgV2": FakeJohannesburgV2(),
-        "FakeKolkataV2": FakeKolkataV2(),
-        "FakeLagosV2": FakeLagosV2(),
-        "FakeLimaV2": FakeLimaV2(),
-        "FakeLondonV2": FakeLondonV2(),
-        "FakeManhattanV2": FakeManhattanV2(),
-        "FakeManilaV2": FakeManilaV2(),
-        "FakeMelbourneV2": FakeMelbourneV2(),
-        "FakeMontrealV2": FakeMontrealV2(),
-        "FakeMumbaiV2": FakeMumbaiV2(),
-        "FakeNairobiV2": FakeNairobiV2(),
-        "FakeOslo": FakeOslo(),
-        "FakeOurenseV2": FakeOurenseV2(),
-        "FakeParisV2": FakeParisV2(),
-        "FakePerth": FakePerth(),
-        "FakePrague": FakePrague(),
-        "FakePoughkeepsieV2": FakePoughkeepsieV2(),
-        "FakeQuitoV2": FakeQuitoV2(),
-        "FakeRochesterV2": FakeRochesterV2(),
-        "FakeRomeV2": FakeRomeV2(),
-        "FakeSantiagoV2": FakeSantiagoV2(),
-        "FakeSherbrooke": FakeSherbrooke(),
-        "FakeSingaporeV2": FakeSingaporeV2(),
-        "FakeSydneyV2": FakeSydneyV2(),
-        "FakeTorontoV2": FakeTorontoV2(),
-        "FakeValenciaV2": FakeValenciaV2(),
-        "FakeVigoV2": FakeVigoV2(),
-        "FakeWashingtonV2": FakeWashingtonV2(),
-        "FakeYorktownV2": FakeYorktownV2(),
-    }
+#     backends = {
+#         "FakeAlmadenV2": FakeAlmadenV2(),
+#         "FakeArmonkV2": FakeArmonkV2(),
+#         "FakeAthensV2": FakeAthensV2(),
+#         "FakeAuckland": FakeAuckland(),
+#         "FakeBelemV2": FakeBelemV2(),
+#         "FakeBoeblingenV2": FakeBoeblingenV2(),
+#         "FakeBogotaV2": FakeBogotaV2(),
+#         "FakeBrooklynV2": FakeBrooklynV2(),
+#         "FakeBurlingtonV2": FakeBurlingtonV2(),
+#         "FakeCairoV2": FakeCairoV2(),
+#         "FakeCambridgeV2": FakeCambridgeV2(),
+#         "FakeCasablancaV2": FakeCasablancaV2(),
+#         "FakeEssexV2": FakeEssexV2(),
+#         "FakeGeneva": FakeGeneva(),
+#         "FakeGuadalupeV2": FakeGuadalupeV2(),
+#         "FakeHanoiV2": FakeHanoiV2(),
+#         "FakeJakartaV2": FakeJakartaV2(),
+#         "FakeJohannesburgV2": FakeJohannesburgV2(),
+#         "FakeKolkataV2": FakeKolkataV2(),
+#         "FakeLagosV2": FakeLagosV2(),
+#         "FakeLimaV2": FakeLimaV2(),
+#         "FakeLondonV2": FakeLondonV2(),
+#         "FakeManhattanV2": FakeManhattanV2(),
+#         "FakeManilaV2": FakeManilaV2(),
+#         "FakeMelbourneV2": FakeMelbourneV2(),
+#         "FakeMontrealV2": FakeMontrealV2(),
+#         "FakeMumbaiV2": FakeMumbaiV2(),
+#         "FakeNairobiV2": FakeNairobiV2(),
+#         "FakeOslo": FakeOslo(),
+#         "FakeOurenseV2": FakeOurenseV2(),
+#         "FakeParisV2": FakeParisV2(),
+#         "FakePerth": FakePerth(),
+#         "FakePrague": FakePrague(),
+#         "FakePoughkeepsieV2": FakePoughkeepsieV2(),
+#         "FakeQuitoV2": FakeQuitoV2(),
+#         "FakeRochesterV2": FakeRochesterV2(),
+#         "FakeRomeV2": FakeRomeV2(),
+#         "FakeSantiagoV2": FakeSantiagoV2(),
+#         "FakeSherbrooke": FakeSherbrooke(),
+#         "FakeSingaporeV2": FakeSingaporeV2(),
+#         "FakeSydneyV2": FakeSydneyV2(),
+#         "FakeTorontoV2": FakeTorontoV2(),
+#         "FakeValenciaV2": FakeValenciaV2(),
+#         "FakeVigoV2": FakeVigoV2(),
+#         "FakeWashingtonV2": FakeWashingtonV2(),
+#         "FakeYorktownV2": FakeYorktownV2(),
+#     }
 
-    if backend not in backends:
-        raise ValueError(f"Invalid backend: {backend}")
+#     if backend not in backends:
+#         raise ValueError(f"Invalid backend: {backend}")
 
-    return backends[backend]
+#     return backends[backend]

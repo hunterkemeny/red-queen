@@ -64,7 +64,7 @@ import logging
 import copy
 
 from preprocessing import Preprocess
-from utils import choose_backend, initialize_tket_pass_manager
+from utils import initialize_tket_pass_manager, FakeFlamingo
 
 import qiskit
 from qiskit import transpile, QuantumCircuit
@@ -229,7 +229,7 @@ class Runner:
         :param benchmark: benchmark to be transpiled
         :param optimization_level: level of optimization to be used
         """
-        backend = choose_backend(self.backend)  # FakeFlamingo(11) #
+        backend = FakeFlamingo(qubits=200, target=self.backend, distance=11) #choose_backend(self.backend)  
         start_mem = memory_usage(max_usage=True)
         if self.compiler_dict["compiler"] == "pytket":
             tket_pm = initialize_tket_pass_manager(backend, optimization_level)
@@ -237,7 +237,7 @@ class Runner:
         else:
             transpile(
                 benchmark, backend, optimization_level=optimization_level
-            )  # backend=FakeFlamingo(11), optimization_level=optimization_level) #
+            )
 
         end_mem = memory_usage(max_usage=True)
         memory = end_mem - start_mem
@@ -278,7 +278,7 @@ class Runner:
         memory = self.profile_func(copy.deepcopy(benchmark_circuit))
         self.metric_data[benchmark_name]["memory_footprint (MiB)"].append(memory)
 
-        backend = choose_backend(self.backend)  # FakeFlamingo(11)
+        backend = backend = FakeFlamingo(qubits=200, target=self.backend, distance=11)
 
         #############################
         # TRANSPILATION TIME
@@ -398,14 +398,18 @@ class Runner:
 
 if __name__ == "__main__":
 
-    runner = Runner(
-        {
-            "compiler": str(sys.argv[1]),
-            "version": str(sys.argv[2]),
-            "optimization_level": int(sys.argv[3]),
-        },
-        str(sys.argv[4]),  # "FakeFlamingo"
-        int(sys.argv[5]),
-        str(sys.argv[6]),
-    )
-    runner.run_benchmarks()
+    targets = ["heavy_hex", "all_to_all", "linear"]
+
+    for target in targets:
+
+        runner = Runner(
+            {
+                "compiler": str(sys.argv[1]),
+                "version": str(sys.argv[2]),
+                "optimization_level": int(sys.argv[3]),
+            },
+            target,
+            int(sys.argv[5]),
+            str(sys.argv[6]),
+        )
+        runner.run_benchmarks()
