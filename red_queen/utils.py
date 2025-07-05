@@ -21,7 +21,7 @@ from pytket.circuit import OpType, Node
 from pytket.placement import NoiseAwarePlacement
 from pytket.passes import (
     DecomposeBoxes,
-    auto_rebase_pass,
+    AutoRebase,
     SynthesiseTket,
     FullPeepholeOptimise,
     CXMappingPass,
@@ -192,7 +192,7 @@ def initialize_tket_pass_manager(backend, optimization_level):
             averaged_edge_gate_errors[tuple(Node(x) for x in qarg)] = avg
     # BUild tket compilation sequence:
     passlist = [DecomposeBoxes()]
-    rebase_pass = auto_rebase_pass({OpType.X, OpType.SX, OpType.Rz, OpType.CZ})
+    rebase_pass = AutoRebase({OpType.X, OpType.SX, OpType.Rz, OpType.CZ})
     if optimization_level == 0:
         passlist.append(rebase_pass)
     elif optimization_level == 1:

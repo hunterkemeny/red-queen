@@ -65,6 +65,7 @@ import copy
 
 from preprocessing import Preprocess
 from utils import initialize_tket_pass_manager, FakeFlamingo
+from progress_visualizer import ProgressVisualizer
 
 import qiskit
 from qiskit import transpile, QuantumCircuit
@@ -119,6 +120,7 @@ class Runner:
             "memory_footprint (MiB)",
         ]
         self.second_compiler_readout = second_compiler_readout
+        self.progress_visualizer = None
 
         self.preprocess_benchmarks()
 
@@ -153,11 +155,19 @@ class Runner:
         )
         benchmarks = self.list_files(benchmarking_path)
         self.full_benchmark_list = []
+        
+        # Initialize progress visualizer
+        self.progress_visualizer = ProgressVisualizer(
+            total_benchmarks=len([b for b in benchmarks if b != ".DS_Store"]),
+            num_runs=self.num_runs,
+            compiler_info=self.compiler_dict
+        )
+        
         for benchmark in benchmarks:
             if benchmark == ".DS_Store":
                 continue
             qasm = self.get_qasm_benchmark(benchmark)
-            logger.info("Converting %s to high-level circuit...", benchmark)
+            print(f"Converting {benchmark} to high-level circuit...")
 
             start_time = time.perf_counter()
             if self.compiler_dict["compiler"] == "pytket":
@@ -178,19 +188,32 @@ class Runner:
         """
         Run all benchmarks in full_benchmark_list.
         """
-        logger_counter = 1
+        if self.progress_visualizer:
+            self.progress_visualizer.start_benchmarking()
+        
         for benchmark in self.full_benchmark_list:
+            benchmark_name = list(benchmark.keys())[0]
+            
+            if self.progress_visualizer:
+                self.progress_visualizer.start_benchmark(benchmark_name)
 
-            for _ in range(self.num_runs):
-                logger.info(
-                    "Running benchmark %s of %s...",
-                    logger_counter,
-                    self.num_runs * len(self.full_benchmark_list),
-                )
+            for run_num in range(self.num_runs):
+                if self.progress_visualizer:
+                    self.progress_visualizer.start_run(run_num + 1)
+                
                 self.run_benchmark(benchmark)
-                logger_counter += 1
 
             self.calculate_aggregate_statistics(benchmark)
+            
+            if self.progress_visualizer:
+                self.progress_visualizer.complete_benchmark(
+                    benchmark_name, 
+                    self.metric_data[benchmark_name]
+                )
+        
+        if self.progress_visualizer:
+            self.progress_visualizer.print_summary()
+            
         self.save_results()
 
     def save_results(self):
@@ -214,13 +237,16 @@ class Runner:
                 data = json.load(json_file)
             data.append(self.metric_data)
             with open(results_path, "w", encoding="utf-8") as json_file:
-                json.dump(data, json_file)
+                json.dump(data, json_file, indent=2)
         else:
             results_path = os.path.join(
                 os.path.dirname(__file__), "results", f"results_run{run_number}.json"
             )
             with open(results_path, "w", encoding="utf-8") as json_file:
-                json.dump([self.metric_data], json_file)
+                json.dump([self.metric_data], json_file, indent=2)
+        
+        if self.progress_visualizer:
+            self.progress_visualizer.info(f"Results saved to: {results_path}")
 
     def transpile_in_process(self, benchmark: QuantumCircuit, optimization_level: int):
         """
@@ -272,7 +298,9 @@ class Runner:
         #############################
 
         # Add memory_footprint to dictionary corresponding to this benchmark
-        logger.info("Calculating memory footprint...")
+        if self.progress_visualizer:
+            self.progress_visualizer.update_progress("📊 Calculating memory footprint...", "\033[96m")
+        
         # Multiprocesss transpilation to get accurate memory usage
         # Must deepcopy benchmark_circuit to avoid compiling the same circuit multiple times
         memory = self.profile_func(copy.deepcopy(benchmark_circuit))
@@ -284,7 +312,9 @@ class Runner:
         # TRANSPILATION TIME
         #############################
 
-        logger.info("Calculating speed...")
+        if self.progress_visualizer:
+            self.progress_visualizer.update_progress("⚡ Calculating transpilation time...", "\033[93m")
+        
         # to get accurate time measurement, need to run transpilation without profiling
         benchmark_copy = copy.deepcopy(benchmark_circuit)
         if self.compiler_dict["compiler"] == "pytket":
@@ -317,7 +347,8 @@ class Runner:
         # DEPTH
         #############################
 
-        logger.info("Calculating depth...")
+        if self.progress_visualizer:
+            self.progress_visualizer.update_progress("🔍 Calculating circuit depth...", "\033[95m")
         if self.compiler_dict["compiler"] == "pytket":
             transpiled_circuit = benchmark_copy
             qasm_string = circuit_to_qasm_str(transpiled_circuit)
@@ -392,8 +423,6 @@ class Runner:
             self.metric_data[benchmark_name]["aggregate"][metric][
                 "standard_deviation"
             ] = np.std(np.array(self.metric_data[benchmark_name][metric], dtype=float))
-
-        logger.info(self.metric_data)
 
 
 if __name__ == "__main__":

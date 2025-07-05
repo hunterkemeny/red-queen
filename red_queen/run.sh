@@ -1,100 +1,109 @@
-#!/usr/bin/env zsh
+#!/bin/bash
 
-echo "Welcome to BenchiQle!"
-echo "Enter the first compiler you would like to benchmark (we currently support 'qiskit' and 'pytket'): "
-read compiler1
-if [ "$compiler1" != "qiskit" ] && [ "$compiler1" != "pytket" ]
-then
-    echo "Invalid compiler entered, exiting."
-    exit 0
+# Beautiful Red Queen Benchmarking Script
+# This script provides a modern, user-friendly CLI interface
+
+# Check if Python CLI interface exists
+if [ ! -f "cli_interface.py" ]; then
+    echo "Error: cli_interface.py not found!"
+    exit 1
 fi
-echo "Enter the version of the compiler you would like to benchmark "
-read version1
-echo "Enter the optimization level for which you would like to run the compiler: "
-if [ "$compiler1" = "pytket" ]
-then
-    echo "(pytket supports optimization levels 0, 1, and 2)"
-    read opt1
-elif [ "$compiler1" = "qiskit" ]
-then
-    echo "(qiskit supports optimization levels 0, 1, 2, and 3)"
-    read opt1
+
+# Make CLI interface executable
+chmod +x cli_interface.py
+
+# Run the beautiful CLI interface and capture configuration
+echo "Starting Red Queen Benchmarking Suite..."
+
+# Run the CLI interface
+python3 cli_interface.py
+cli_exit_code=$?
+
+# Check if CLI was successful
+if [ $cli_exit_code -ne 0 ]; then
+    echo "Setup cancelled or failed. Exit code: $cli_exit_code"
+    exit 1
 fi
-echo "Enter the second compiler you would like to benchmark. Press RETURN if you only want to benchmark one compiler. "
-echo "(we currently support only 'qiskit' and 'pytket'): "
-read compiler2
-if [ -z "$compiler2" ]
-then
-    echo "No second compiler entered, proceeding with only one compiler."
+
+# Read configuration from the file created by CLI
+if [ -f "/tmp/rq_config.txt" ]; then
+    source /tmp/rq_config.txt
+    rm /tmp/rq_config.txt
+    echo "Configuration loaded successfully!"
 else
-    echo "Benchmarking will be done with $compiler2 as the second compiler."
-    echo "Enter the version of the compiler you would like to benchmark: "
-    read version2
-    echo "Enter the optimization level for which you would like to run the compiler: "
-    if [ "$compiler2" = "pytket" ]
-    then
-        echo "(pytket supports optimization levels 0, 1, and 2)"
-        read opt2
-    elif [ "$compiler2" = "qiskit" ]
-    then
-        echo "(qiskit supports optimization levels 0, 1, 2, and 3)"
-        read opt2
-    fi
-fi
-echo "Enter the backend you would like to benchmark (default is FakeWashingtonV2): "
-echo "SEE: https://docs.quantum.ibm.com/api/qiskit/providers_fake_provider"
-read backend
-if [ -z "$backend" ]
-then
-    backend="FakeWashingtonV2"
-fi
-echo "Enter the number of times you would like to run each benchmark (default is 1): "
-read num_runs
-if [ -z "$num_runs" ]
-then
-    num_runs=1
+    echo "Error: Configuration file not found!"
+    exit 1
 fi
 
+# Function to setup and run virtual environment
 venv_spinup () {
     # Naming convention: venv_compilerName_versionNumber
     venv_name="venv_${1}_$2"
+    
+    # Create virtual_environments directory if it doesn't exist
+    if [ ! -d "virtual_environments" ]; then
+        mkdir virtual_environments
+    fi
+    
     cd virtual_environments
-    if [ -d "$venv_name" ]
-    then
-        echo "Starting up virtual environment $venv_name."
+    
+    if [ -d "$venv_name" ]; then
+        echo "🔄 Activating existing virtual environment: $venv_name"
         source $venv_name/bin/activate
     else
-        echo "Virtual environment $venv_name does not yet exist on your system."
-        echo "Creating virtual environment $venv_name."
+        echo "🆕 Creating new virtual environment: $venv_name"
         python3 -m venv $venv_name
         source $venv_name/bin/activate
-        pip install memory_profiler
-        pip install numpy
         
-        if [ "$1" = "pytket" ]
-        then
-            pip install pytket==$2
-            pip install qiskit
-        elif [ "$1" = "qiskit" ]
-        then
-            pip install qiskit==$2
-            pip install pytket
+        echo "📦 Installing dependencies..."
+        pip install --quiet memory_profiler numpy
+        
+        if [ "$1" = "pytket" ]; then
+            echo "Installing PyTKET $2..."
+            if ! pip install --quiet pytket==$2; then
+                echo "❌ Failed to install pytket==$2"
+                echo "💡 Available versions: $(pip index versions pytket 2>/dev/null | head -5 | tail -4 || echo 'Check PyPI for available versions')"
+                exit 1
+            fi
+            echo "Installing Qiskit for compatibility..."
+            if ! pip install --quiet qiskit; then
+                echo "⚠️  Warning: Failed to install qiskit for compatibility"
+            fi
+        elif [ "$1" = "qiskit" ]; then
+            echo "Installing Qiskit $2..."
+            if ! pip install --quiet qiskit==$2; then
+                echo "❌ Failed to install qiskit==$2"
+                echo "💡 Available versions: $(pip index versions qiskit 2>/dev/null | head -5 | tail -4 || echo 'Check PyPI for available versions')"
+                exit 1
+            fi
+            echo "Installing PyTKET for compatibility..."
+            if ! pip install --quiet pytket; then
+                echo "⚠️  Warning: Failed to install pytket for compatibility"
+            fi
         fi
+        
+        echo "✅ Virtual environment setup complete!"
     fi
 
     cd ..
+    
+    # Run the benchmarking
+    echo "🚀 Starting benchmarking process..."
     python3 runner.py $1 $2 $3 $4 $5 $6 
+    
     deactivate
 }
 
+# Run primary compiler
+echo "🔧 Setting up primary compiler environment..."
 second_compiler_readout=false
-venv_spinup $compiler1 $version1 $opt1 $backend $num_runs $second_compiler_readout
+venv_spinup $COMPILER1 $VERSION1 $OPT1 $BACKEND $NUM_RUNS $second_compiler_readout
 
-if [ -z "$compiler2" ]
-then
-    echo "No second compiler entered, exiting."
-    exit 0
+# Run secondary compiler if specified
+if [ -n "$COMPILER2" ]; then
+    echo "🔧 Setting up secondary compiler environment..."
+    second_compiler_readout=true
+    venv_spinup $COMPILER2 $VERSION2 $OPT2 $BACKEND $NUM_RUNS $second_compiler_readout
 fi
 
-second_compiler_readout=true
-venv_spinup $compiler2 $version2 $opt2 $backend $num_runs $second_compiler_readout
+echo "🎉 Benchmarking complete! Check the results directory for output files." 

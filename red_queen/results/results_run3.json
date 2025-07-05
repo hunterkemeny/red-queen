@@ -1,0 +1,700 @@
+[
+  {
+    "metadata: ": {
+      "compiler": "qiskit",
+      "version": "1.0",
+      "optimization_level": 0
+    },
+    "backend": "linear",
+    "vqe_n4.qasm": {
+      "total_time (seconds)": [
+        0.039260958787053823
+      ],
+      "parsing/build_time (seconds)": [
+        0.0004943748936057091
+      ],
+      "transpile_time (seconds)": [
+        0.019383291946724057
+      ],
+      "depth (gates)": [
+        44
+      ],
+      "memory_footprint (MiB)": [
+        1.90625
+      ],
+      "aggregate": {
+        "total_time (seconds)": {
+          "mean": 0.039260958787053823,
+          "median": 0.039260958787053823,
+          "range": [
+            0.039260958787053823,
+            0.039260958787053823
+          ],
+          "variance": 0.0,
+          "standard_deviation": 0.0
+        },
+        "parsing/build_time (seconds)": {
+          "mean": 0.0004943748936057091,
+          "median": 0.0004943748936057091,
+          "range": [
+            0.0004943748936057091,
+            0.0004943748936057091
+          ],
+          "variance": 0.0,
+          "standard_deviation": 0.0
+        },
+        "transpile_time (seconds)": {
+          "mean": 0.019383291946724057,
+          "median": 0.019383291946724057,
+          "range": [
+            0.019383291946724057,
+            0.019383291946724057
+          ],
+          "variance": 0.0,
+          "standard_deviation": 0.0
+        },
+        "depth (gates)": {
+          "mean": 44.0,
+          "median": 44.0,
+          "range": [
+            44.0,
+            44.0
+          ],
+          "variance": 0.0,
+          "standard_deviation": 0.0
+        },
+        "memory_footprint (MiB)": {
+          "mean": 1.90625,
+          "median": 1.90625,
+          "range": [
+            1.90625,
+            1.90625
+          ],
+          "variance": 0.0,
+          "standard_deviation": 0.0
+        }
+      }
+    },
+    "adder_n4.qasm": {
+      "total_time (seconds)": [
+        0.13272595894522965
+      ],
+      "parsing/build_time (seconds)": [
+        0.00019387505017220974
+      ],
+      "transpile_time (seconds)": [
+        0.06626604194752872
+      ],
+      "depth (gates)": [
+        59
+      ],
+      "memory_footprint (MiB)": [
+        11.140625
+      ],
+      "aggregate": {
+        "total_time (seconds)": {
+          "mean": 0.13272595894522965,
+          "median": 0.13272595894522965,
+          "range": [
+            0.13272595894522965,
+            0.13272595894522965
+          ],
+          "variance": 0.0,
+          "standard_deviation": 0.0
+        },
+        "parsing/build_time (seconds)": {
+          "mean": 0.00019387505017220974,
+          "median": 0.00019387505017220974,
+          "range": [
+            0.00019387505017220974,
+            0.00019387505017220974
+          ],
+          "variance": 0.0,
+          "standard_deviation": 0.0
+        },
+        "transpile_time (seconds)": {
+          "mean": 0.06626604194752872,
+          "median": 0.06626604194752872,
+          "range": [
+            0.06626604194752872,
+            0.06626604194752872
+          ],
+          "variance": 0.0,
+          "standard_deviation": 0.0
+        },
+        "depth (gates)": {
+          "mean": 59.0,
+          "median": 59.0,
+          "range": [
+            59.0,
+            59.0
+          ],
+          "variance": 0.0,
+          "standard_deviation": 0.0
+        },
+        "memory_footprint (MiB)": {
+          "mean": 11.140625,
+          "median": 11.140625,
+          "range": [
+            11.140625,
+            11.140625
+          ],
+          "variance": 0.0,
+          "standard_deviation": 0.0
+        }
+      }
+    },
+    "grover_n2.qasm": {
+      "total_time (seconds)": [
+        0.03619958204217255
+      ],
+      "parsing/build_time (seconds)": [
+        0.00014825002290308475
+      ],
+      "transpile_time (seconds)": [
+        0.018025666009634733
+      ],
+      "depth (gates)": [
+        37
+      ],
+      "memory_footprint (MiB)": [
+        2.03125
+      ],
+      "aggregate": {
+        "total_time (seconds)": {
+          "mean": 0.03619958204217255,
+          "median": 0.03619958204217255,
+          "range": [
+            0.03619958204217255,
+            0.03619958204217255
+          ],
+          "variance": 0.0,
+          "standard_deviation": 0.0
+        },
+        "parsing/build_time (seconds)": {
+          "mean": 0.00014825002290308475,
+          "median": 0.00014825002290308475,
+          "range": [
+            0.00014825002290308475,
+            0.00014825002290308475
+          ],
+          "variance": 0.0,
+          "standard_deviation": 0.0
+        },
+        "transpile_time (seconds)": {
+          "mean": 0.018025666009634733,
+          "median": 0.018025666009634733,
+          "range": [
+            0.018025666009634733,
+            0.018025666009634733
+          ],
+          "variance": 0.0,
+          "standard_deviation": 0.0
+        },
+        "depth (gates)": {
+          "mean": 37.0,
+          "median": 37.0,
+          "range": [
+            37.0,
+            37.0
+          ],
+          "variance": 0.0,
+          "standard_deviation": 0.0
+        },
+        "memory_footprint (MiB)": {
+          "mean": 2.03125,
+          "median": 2.03125,
+          "range": [
+            2.03125,
+            2.03125
+          ],
+          "variance": 0.0,
+          "standard_deviation": 0.0
+        }
+      }
+    },
+    "qft_n4.qasm": {
+      "total_time (seconds)": [
+        0.15186820924282074
+      ],
+      "parsing/build_time (seconds)": [
+        0.00022520916536450386
+      ],
+      "transpile_time (seconds)": [
+        0.07582150003872812
+      ],
+      "depth (gates)": [
+        102
+      ],
+      "memory_footprint (MiB)": [
+        10.75
+      ],
+      "aggregate": {
+        "total_time (seconds)": {
+          "mean": 0.15186820924282074,
+          "median": 0.15186820924282074,
+          "range": [
+            0.15186820924282074,
+            0.15186820924282074
+          ],
+          "variance": 0.0,
+          "standard_deviation": 0.0
+        },
+        "parsing/build_time (seconds)": {
+          "mean": 0.00022520916536450386,
+          "median": 0.00022520916536450386,
+          "range": [
+            0.00022520916536450386,
+            0.00022520916536450386
+          ],
+          "variance": 0.0,
+          "standard_deviation": 0.0
+        },
+        "transpile_time (seconds)": {
+          "mean": 0.07582150003872812,
+          "median": 0.07582150003872812,
+          "range": [
+            0.07582150003872812,
+            0.07582150003872812
+          ],
+          "variance": 0.0,
+          "standard_deviation": 0.0
+        },
+        "depth (gates)": {
+          "mean": 102.0,
+          "median": 102.0,
+          "range": [
+            102.0,
+            102.0
+          ],
+          "variance": 0.0,
+          "standard_deviation": 0.0
+        },
+        "memory_footprint (MiB)": {
+          "mean": 10.75,
+          "median": 10.75,
+          "range": [
+            10.75,
+            10.75
+          ],
+          "variance": 0.0,
+          "standard_deviation": 0.0
+        }
+      }
+    },
+    "ising_n10.qasm": {
+      "total_time (seconds)": [
+        0.0753005831502378
+      ],
+      "parsing/build_time (seconds)": [
+        0.0016196668148040771
+      ],
+      "transpile_time (seconds)": [
+        0.03684045816771686
+      ],
+      "depth (gates)": [
+        143
+      ],
+      "memory_footprint (MiB)": [
+        1.984375
+      ],
+      "aggregate": {
+        "total_time (seconds)": {
+          "mean": 0.0753005831502378,
+          "median": 0.0753005831502378,
+          "range": [
+            0.0753005831502378,
+            0.0753005831502378
+          ],
+          "variance": 0.0,
+          "standard_deviation": 0.0
+        },
+        "parsing/build_time (seconds)": {
+          "mean": 0.0016196668148040771,
+          "median": 0.0016196668148040771,
+          "range": [
+            0.0016196668148040771,
+            0.0016196668148040771
+          ],
+          "variance": 0.0,
+          "standard_deviation": 0.0
+        },
+        "transpile_time (seconds)": {
+          "mean": 0.03684045816771686,
+          "median": 0.03684045816771686,
+          "range": [
+            0.03684045816771686,
+            0.03684045816771686
+          ],
+          "variance": 0.0,
+          "standard_deviation": 0.0
+        },
+        "depth (gates)": {
+          "mean": 143.0,
+          "median": 143.0,
+          "range": [
+            143.0,
+            143.0
+          ],
+          "variance": 0.0,
+          "standard_deviation": 0.0
+        },
+        "memory_footprint (MiB)": {
+          "mean": 1.984375,
+          "median": 1.984375,
+          "range": [
+            1.984375,
+            1.984375
+          ],
+          "variance": 0.0,
+          "standard_deviation": 0.0
+        }
+      }
+    },
+    "qaoa_n6.qasm": {
+      "total_time (seconds)": [
+        0.6658876251894981
+      ],
+      "parsing/build_time (seconds)": [
+        0.001756124896928668
+      ],
+      "transpile_time (seconds)": [
+        0.3320657501462847
+      ],
+      "depth (gates)": [
+        417
+      ],
+      "memory_footprint (MiB)": [
+        26.046875
+      ],
+      "aggregate": {
+        "total_time (seconds)": {
+          "mean": 0.6658876251894981,
+          "median": 0.6658876251894981,
+          "range": [
+            0.6658876251894981,
+            0.6658876251894981
+          ],
+          "variance": 0.0,
+          "standard_deviation": 0.0
+        },
+        "parsing/build_time (seconds)": {
+          "mean": 0.001756124896928668,
+          "median": 0.001756124896928668,
+          "range": [
+            0.001756124896928668,
+            0.001756124896928668
+          ],
+          "variance": 0.0,
+          "standard_deviation": 0.0
+        },
+        "transpile_time (seconds)": {
+          "mean": 0.3320657501462847,
+          "median": 0.3320657501462847,
+          "range": [
+            0.3320657501462847,
+            0.3320657501462847
+          ],
+          "variance": 0.0,
+          "standard_deviation": 0.0
+        },
+        "depth (gates)": {
+          "mean": 417.0,
+          "median": 417.0,
+          "range": [
+            417.0,
+            417.0
+          ],
+          "variance": 0.0,
+          "standard_deviation": 0.0
+        },
+        "memory_footprint (MiB)": {
+          "mean": 26.046875,
+          "median": 26.046875,
+          "range": [
+            26.046875,
+            26.046875
+          ],
+          "variance": 0.0,
+          "standard_deviation": 0.0
+        }
+      }
+    },
+    "gcm_h6.qasm": {
+      "total_time (seconds)": [
+        12.728278667898849
+      ],
+      "parsing/build_time (seconds)": [
+        0.009251334005966783
+      ],
+      "transpile_time (seconds)": [
+        6.359513666946441
+      ],
+      "depth (gates)": [
+        2926
+      ],
+      "memory_footprint (MiB)": [
+        154.34375
+      ],
+      "aggregate": {
+        "total_time (seconds)": {
+          "mean": 12.728278667898849,
+          "median": 12.728278667898849,
+          "range": [
+            12.728278667898849,
+            12.728278667898849
+          ],
+          "variance": 0.0,
+          "standard_deviation": 0.0
+        },
+        "parsing/build_time (seconds)": {
+          "mean": 0.009251334005966783,
+          "median": 0.009251334005966783,
+          "range": [
+            0.009251334005966783,
+            0.009251334005966783
+          ],
+          "variance": 0.0,
+          "standard_deviation": 0.0
+        },
+        "transpile_time (seconds)": {
+          "mean": 6.359513666946441,
+          "median": 6.359513666946441,
+          "range": [
+            6.359513666946441,
+            6.359513666946441
+          ],
+          "variance": 0.0,
+          "standard_deviation": 0.0
+        },
+        "depth (gates)": {
+          "mean": 2926.0,
+          "median": 2926.0,
+          "range": [
+            2926.0,
+            2926.0
+          ],
+          "variance": 0.0,
+          "standard_deviation": 0.0
+        },
+        "memory_footprint (MiB)": {
+          "mean": 154.34375,
+          "median": 154.34375,
+          "range": [
+            154.34375,
+            154.34375
+          ],
+          "variance": 0.0,
+          "standard_deviation": 0.0
+        }
+      }
+    },
+    "qpe_n9.qasm": {
+      "total_time (seconds)": [
+        0.5198374588508159
+      ],
+      "parsing/build_time (seconds)": [
+        0.00036812503822147846
+      ],
+      "transpile_time (seconds)": [
+        0.2597346669062972
+      ],
+      "depth (gates)": [
+        227
+      ],
+      "memory_footprint (MiB)": [
+        23.96875
+      ],
+      "aggregate": {
+        "total_time (seconds)": {
+          "mean": 0.5198374588508159,
+          "median": 0.5198374588508159,
+          "range": [
+            0.5198374588508159,
+            0.5198374588508159
+          ],
+          "variance": 0.0,
+          "standard_deviation": 0.0
+        },
+        "parsing/build_time (seconds)": {
+          "mean": 0.00036812503822147846,
+          "median": 0.00036812503822147846,
+          "range": [
+            0.00036812503822147846,
+            0.00036812503822147846
+          ],
+          "variance": 0.0,
+          "standard_deviation": 0.0
+        },
+        "transpile_time (seconds)": {
+          "mean": 0.2597346669062972,
+          "median": 0.2597346669062972,
+          "range": [
+            0.2597346669062972,
+            0.2597346669062972
+          ],
+          "variance": 0.0,
+          "standard_deviation": 0.0
+        },
+        "depth (gates)": {
+          "mean": 227.0,
+          "median": 227.0,
+          "range": [
+            227.0,
+            227.0
+          ],
+          "variance": 0.0,
+          "standard_deviation": 0.0
+        },
+        "memory_footprint (MiB)": {
+          "mean": 23.96875,
+          "median": 23.96875,
+          "range": [
+            23.96875,
+            23.96875
+          ],
+          "variance": 0.0,
+          "standard_deviation": 0.0
+        }
+      }
+    },
+    "ft_2.qasm": {
+      "total_time (seconds)": [
+        0.049210666213184595
+      ],
+      "parsing/build_time (seconds)": [
+        0.0005135000683367252
+      ],
+      "transpile_time (seconds)": [
+        0.024348583072423935
+      ],
+      "depth (gates)": [
+        119
+      ],
+      "memory_footprint (MiB)": [
+        2.1875
+      ],
+      "aggregate": {
+        "total_time (seconds)": {
+          "mean": 0.049210666213184595,
+          "median": 0.049210666213184595,
+          "range": [
+            0.049210666213184595,
+            0.049210666213184595
+          ],
+          "variance": 0.0,
+          "standard_deviation": 0.0
+        },
+        "parsing/build_time (seconds)": {
+          "mean": 0.0005135000683367252,
+          "median": 0.0005135000683367252,
+          "range": [
+            0.0005135000683367252,
+            0.0005135000683367252
+          ],
+          "variance": 0.0,
+          "standard_deviation": 0.0
+        },
+        "transpile_time (seconds)": {
+          "mean": 0.024348583072423935,
+          "median": 0.024348583072423935,
+          "range": [
+            0.024348583072423935,
+            0.024348583072423935
+          ],
+          "variance": 0.0,
+          "standard_deviation": 0.0
+        },
+        "depth (gates)": {
+          "mean": 119.0,
+          "median": 119.0,
+          "range": [
+            119.0,
+            119.0
+          ],
+          "variance": 0.0,
+          "standard_deviation": 0.0
+        },
+        "memory_footprint (MiB)": {
+          "mean": 2.1875,
+          "median": 2.1875,
+          "range": [
+            2.1875,
+            2.1875
+          ],
+          "variance": 0.0,
+          "standard_deviation": 0.0
+        }
+      }
+    },
+    "ft_1.qasm": {
+      "total_time (seconds)": [
+        0.0682578319683671
+      ],
+      "parsing/build_time (seconds)": [
+        0.0008146660402417183
+      ],
+      "transpile_time (seconds)": [
+        0.03372158296406269
+      ],
+      "depth (gates)": [
+        232
+      ],
+      "memory_footprint (MiB)": [
+        2.203125
+      ],
+      "aggregate": {
+        "total_time (seconds)": {
+          "mean": 0.0682578319683671,
+          "median": 0.0682578319683671,
+          "range": [
+            0.0682578319683671,
+            0.0682578319683671
+          ],
+          "variance": 0.0,
+          "standard_deviation": 0.0
+        },
+        "parsing/build_time (seconds)": {
+          "mean": 0.0008146660402417183,
+          "median": 0.0008146660402417183,
+          "range": [
+            0.0008146660402417183,
+            0.0008146660402417183
+          ],
+          "variance": 0.0,
+          "standard_deviation": 0.0
+        },
+        "transpile_time (seconds)": {
+          "mean": 0.03372158296406269,
+          "median": 0.03372158296406269,
+          "range": [
+            0.03372158296406269,
+            0.03372158296406269
+          ],
+          "variance": 0.0,
+          "standard_deviation": 0.0
+        },
+        "depth (gates)": {
+          "mean": 232.0,
+          "median": 232.0,
+          "range": [
+            232.0,
+            232.0
+          ],
+          "variance": 0.0,
+          "standard_deviation": 0.0
+        },
+        "memory_footprint (MiB)": {
+          "mean": 2.203125,
+          "median": 2.203125,
+          "range": [
+            2.203125,
+            2.203125
+          ],
+          "variance": 0.0,
+          "standard_deviation": 0.0
+        }
+      }
+    }
+  }
+]
